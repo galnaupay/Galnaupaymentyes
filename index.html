@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shiin | Payment Gateway</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="kyykzy.css">
+	<link rel="icon" href="https://files.catbox.moe/ew33a6.jpg"> <!-- Icon -->
+</head>
+<body class="bg-gray-900 text-white font-mono">
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="fixed inset-0 bg-black flex flex-col items-center justify-center z-50">
+        <div class="text-center">
+            <div class="w-64 h-1 bg-gray-800 rounded-full mb-4 overflow-hidden">
+                <div id="progress-bar" class="h-full bg-green-400 rounded-full" style="width: 0%"></div>
+            </div>
+            <h2 class="text-2xl mb-4 text-green-400">Initializing Payment System</h2>
+            <button id="start-btn" class="hidden px-6 py-3 bg-green-400 text-black font-bold rounded-lg hover:bg-green-300 transition-all duration-300">
+                <i class="fas fa-lock-open mr-2"></i>Start Payment Gateway
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="content" class="hidden container mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="text-center mb-12">
+            <div class="inline-block p-4 rounded-lg bg-gray-800 bg-opacity-70 backdrop-blur-sm">
+                <h1 class="text-4xl font-bold text-green-400 mb-2">Shiin<span class="text-white">Pay</span></h1>
+                <p class="text-gray-400">Digital Payment Solutions</p>
+            </div>
+        </header>
+
+        <!-- Payment Sections -->
+        <div class="max-w-md mx-auto space-y-6">
+            <!-- E-Wallet Section -->
+            <div class="payment-section">
+                <button onclick="toggleSection('ewallet')" class="w-full py-3 px-6 bg-gray-800 hover:bg-gray-700 rounded-lg flex justify-between items-center transition-all duration-300">
+                    <span><i class="fas fa-wallet mr-2 text-green-400"></i>E-Wallet</span>
+                    <i class="fas fa-chevron-down text-gray-400 transition-transform duration-300"></i>
+                </button>
+                <div id="ewallet-content" class="hidden mt-2 space-y-2 pl-4">
+                    <button onclick="copyToClipboard('dana')" class="w-full py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded flex items-center justify-between">
+                        <span>DANA</span>
+                        <i class="far fa-copy"></i>
+                    </button>
+					<button onclick="copyToClipboard('gopay')" class="w-full py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded flex items-center justify-between">
+                        <span>GOPAY</span>
+                        <i class="far fa-copy"></i>
+                    </button>
+                    <button onclick="copyToClipboard('ovo')" class="w-full py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded flex items-center justify-between">
+                        <span>OVO</span>
+                        <i class="far fa-copy"></i>
+                    </button>
+                    <button onclick="openQRIS()" class="w-full py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded flex items-center justify-between">
+                        <span>QRIS</span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Bank Section -->
+            <div class="payment-section">
+                <button onclick="toggleSection('bank')" class="w-full py-3 px-6 bg-gray-800 hover:bg-gray-700 rounded-lg flex justify-between items-center transition-all duration-300">
+                    <span><i class="fas fa-university mr-2 text-green-400"></i>Bank Transfer</span>
+                    <i class="fas fa-chevron-down text-gray-400 transition-transform duration-300"></i>
+                </button>
+                <div id="bank-content" class="hidden mt-2 space-y-2 pl-4">
+                    <button onclick="copyToClipboard('bri')" class="w-full py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded flex items-center justify-between">
+                        <span>BRI</span>
+                        <i class="far fa-copy"></i>
+                    </button>
+                    <button onclick="copyToClipboard('bni')" class="w-full py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded flex items-center justify-between">
+                        <span>BNI</span>
+                        <i class="far fa-copy"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Donate Section -->
+            <div class="payment-section">
+                <button onclick="toggleSection('donate')" class="w-full py-3 px-6 bg-gray-800 hover:bg-gray-700 rounded-lg flex justify-between items-center transition-all duration-300">
+                    <span><i class="fas fa-hand-holding-usd mr-2 text-green-400"></i>Donate</span>
+                    <i class="fas fa-chevron-down text-gray-400 transition-transform duration-300"></i>
+                </button>
+                <div id="donate-content" class="hidden mt-2 space-y-2 pl-4">
+                    <a href="#" target="_blank" class="block w-full py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded flex items-center justify-between">
+                        <span>Trakteer</span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="#" target="_blank" class="block w-full py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded flex items-center justify-between">
+                        <span>Saweria</span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                    <a href="#" target="_blank" class="block w-full py-2 px-4 bg-gray-700 hover:bg-gray-600 rounded flex items-center justify-between">
+                        <span>Buy Me A Coffee</span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <div class="mt-16 text-center">
+            <h3 class="text-xl mb-4 text-green-400"><i class="fas fa-headset mr-2"></i>Contact Me</h3>
+            <div class="flex justify-center space-x-4">
+                <button onclick="openWA()" class="px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-lg flex items-center">
+                    <i class="fab fa-whatsapp mr-2 text-green-400"></i>WhatsApp
+                </button>
+                <button onclick="openEmail()" class="px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-lg flex items-center">
+                    <i class="far fa-envelope mr-2 text-green-400"></i>Email
+                </button>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="mt-16 text-center text-gray-500 text-sm">
+            <p>© 2025 ShiinPay. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script src="config.js"></script>
+</body>
+</html>
